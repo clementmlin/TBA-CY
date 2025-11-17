@@ -46,8 +46,8 @@ class Game:
         environnement = Room("salle environnement", ".")
         self.rooms.append(environnement)
         # les salles à l'est
-        phylosophie = Room("salle philosophie", ".")
-        self.rooms.append(phylosophie)
+        philosophie = Room("salle philosophie", ".")
+        self.rooms.append(philosophie)
         psycho = Room("salle psychologie", ".")
         self.rooms.append(psycho)
         # les salles à l'ouest
@@ -60,21 +60,21 @@ class Game:
 
 
 
-        BU.exits = {"N" : histoire, "E" : phylosophie, "S" : société, "O" : techno}
-        histoire.exits = {"N" :hist_cont, "E" : None, "S" : BU, "O" : politique}
-        hist_cont.exits = {"N" :None, "E" :None, "S" : histoire, "O" : None}
-        politique.exits = {"N" :None, "E" :histoire, "S" : techno, "O" : None}
-        société.exits = {"N" :BU, "E" : None, "S" : environnement, "O" : None}
-        environnement.exits = {"N" :société, "E" :None, "S" : None, "O" : None}
-        phylosophie.exits = {"N" :None, "E" : None, "S" : None, "O" :BU}
-        techno.exits = {"N" :politique, "E" : BU, "S" :None, "O" : math}
-        maths.exits = {"N" :None, "E" : techno, "S" : None, "O" : None}
+        BU.exits = {"N" : histoire, "E" : philosophie, "S" : société, "O" : techno, "U":None, "D":None}
+        histoire.exits = {"N" :hist_cont, "E" : None, "S" : BU, "O" : politique,"U":None,"D":None}
+        hist_cont.exits = {"N" :None, "E" :None, "S" : histoire, "O" : None,"U": None,"D":préhist}
+        politique.exits = {"N" :None, "E" :histoire, "S" : techno, "O" : None,"U":None,"D":None}
+        société.exits = {"N" :BU, "E" : None, "S" : environnement, "O" : None,"U":None,"D":None}
+        environnement.exits = {"N" :société, "E" :None, "S" : None, "O" : None,"U":None, "D":None}
+        philosophie.exits = {"N" :None, "E" : None, "S" : None, "O" :BU ,"U":psycho,"D":None }
+        techno.exits = {"N" :politique, "E" : BU, "S" :None, "O" : math,"U":None , "D":None}
+        maths.exits = {"N" :None, "E" : techno, "S" : None, "O" : None,"U": None, "D": None}
 
         #pour monter et descendrre d'étage
 
         
-        préhist.exits = {"N" :, "E" : tower, "S" : castle, "O" : None}
-        psycho.exits = {"N" :, "E" : tower, "S" : castle, "O" : None}
+        préhist.exits = {"N" :, "E" : tower, "S" : castle, "O" : None, "U":hist_cont, "D":None}
+        psycho.exits = {"N" :, "E" : tower, "S" : castle, "O" : None,"U":None, "D":philosophie}
         
 
 
@@ -117,7 +117,7 @@ class Game:
 
     # Print the welcome message
     def printh_welcome(self):
-        print(f"\nBienvenue {self.player.name} dans ce jeu d'aventure !")
+        print(f"\nBienvenue {self.player.name} dans ce jeu d'énigme !")
         print("Entrez 'help' si vous avez besoin d'aide.")
         #
         print(self.player.current_room.get_long_description())
