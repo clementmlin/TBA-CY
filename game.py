@@ -29,28 +29,60 @@ class Game:
         self.commands["go"] = go
         
         # Setup rooms
-
-        forest = Room("Forest", "dans une forêt enchantée. Vous entendez une brise légère à travers la cime des arbres.")
-        self.rooms.append(forest)
-        tower = Room("Tower", "dans une immense tour en pierre qui s'élève au dessus des nuages.")
-        self.rooms.append(tower)
-        cave = Room("Cave", "dans une grotte profonde et sombre. Des voix semblent provenir des profondeurs.")
-        self.rooms.append(cave)
-        cottage = Room("Cottage", "dans un petit chalet pittoresque avec un toit de chaume. Une épaisse fumée verte sort de la cheminée.")
-        self.rooms.append(cottage)
-        swamp = Room("Swamp", "dans un marécage sombre et ténébreux. L'eau bouillonne, les abords sont vaseux.")
-        self.rooms.append(swamp)
-        castle = Room("Castle", "dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
-        self.rooms.append(castle)
+        #les salles au nord
+        BU = Room("Bibliothèque", "Le Hall de la BU, la salle principale.")
+        self.rooms.append(BU)
+        histoire = Room("salle histoire", ".")
+        self.rooms.append(histoire)
+        hist_cont = Room("salle histoire contemporaine", ".")
+        self.rooms.append(hist_cont)
+        politique = Room("politique", ".")
+        self.rooms.append(politique)
+        préhist = Room("préhist", ".")
+        self.rooms.append(préhist)
+        # les salles au sud
+        société= Room("salle société", ".")
+        self.rooms.append(société)
+        environnement = Room("salle environnement", ".")
+        self.rooms.append(environnement)
+        # les salles à l'est
+        phylosophie = Room("salle philosophie", ".")
+        self.rooms.append(phylosophie)
+        psycho = Room("salle psychologie", ".")
+        self.rooms.append(psycho)
+        # les salles à l'ouest
+        techno = Room("salle technologie", ".")
+        self.rooms.append(techno)
+        math = Room("salle mathématiques", ".")
+        self.rooms.append(math)
 
         # Create exits for rooms
 
-        forest.exits = {"N" : cave, "E" : tower, "S" : castle, "O" : None}
-        tower.exits = {"N" : cottage, "E" : None, "S" : swamp, "O" : forest}
-        cave.exits = {"N" : None, "E" : cottage, "S" : forest, "O" : None}
-        cottage.exits = {"N" : None, "E" : None, "S" : tower, "O" : cave}
-        swamp.exits = {"N" : tower, "E" : None, "S" : None, "O" : castle}
-        castle.exits = {"N" : forest, "E" : swamp, "S" : None, "O" : None}
+
+
+        BU.exits = {"N" : histoire, "E" : phylosophie, "S" : société, "O" : techno}
+        histoire.exits = {"N" :hist_cont, "E" : None, "S" : BU, "O" : politique}
+        hist_cont.exits = {"N" :None, "E" :None, "S" : histoire, "O" : None}
+        politique.exits = {"N" :None, "E" :histoire, "S" : techno, "O" : None}
+        société.exits = {"N" :BU, "E" : None, "S" : environnement, "O" : None}
+        environnement.exits = {"N" :société, "E" :None, "S" : None, "O" : None}
+        phylosophie.exits = {"N" :None, "E" : None, "S" : None, "O" :BU}
+        techno.exits = {"N" :politique, "E" : BU, "S" :None, "O" : math}
+        maths.exits = {"N" :None, "E" : techno, "S" : None, "O" : None}
+
+        #pour monter et descendrre d'étage
+
+        
+        préhist.exits = {"N" :, "E" : tower, "S" : castle, "O" : None}
+        psycho.exits = {"N" :, "E" : tower, "S" : castle, "O" : None}
+        
+
+
+
+
+
+
+   
 
         # Setup player and starting room
 
@@ -84,7 +116,7 @@ class Game:
             command.action(self, list_of_words, command.number_of_parameters)
 
     # Print the welcome message
-    def print_welcome(self):
+    def printh_welcome(self):
         print(f"\nBienvenue {self.player.name} dans ce jeu d'aventure !")
         print("Entrez 'help' si vous avez besoin d'aide.")
         #
