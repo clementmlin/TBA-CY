@@ -49,8 +49,33 @@ class Game:
         hist_cont.exits = {"N": None, "E": None, "S": histoire, "O": None}
         politique.exits = {"N": None, "E": histoire, "S": techno, "O": None}
         
-        société.exits = {"N": BU, "E": None, "S": environnement, "O": None}
-        environnement.exits = {"N": société, "E": None, "S": None, "O": None}
+        # Setup rooms
+        #les salles au nord
+        BU = Room("Bibliothèque", "Le Hall de la BU, la salle principale.")
+        self.rooms.append(BU)
+        histoire = Room("salle histoire", ".")
+        self.rooms.append(histoire)
+        hist_cont = Room("salle histoire contemporaine", ".")
+        self.rooms.append(hist_cont)
+        politique = Room("politique", ".")
+        self.rooms.append(politique)
+        préhist = Room("préhist", ".")
+        self.rooms.append(préhist)
+        # les salles au sud
+        société= Room("salle société", ".")
+        self.rooms.append(société)
+        environnement = Room("salle environnement", ".")
+        self.rooms.append(environnement)
+        # les salles à l'est
+        philosophie = Room("salle philosophie", ".")
+        self.rooms.append(philosophie)
+        psycho = Room("salle psychologie", ".")
+        self.rooms.append(psycho)
+        # les salles à l'ouest
+        techno = Room("salle technologie", ".")
+        self.rooms.append(techno)
+        math = Room("salle mathématiques", ".")
+        self.rooms.append(math)
 
         phylosophie.exits = {"N": None, "E": None, "S": None, "O": BU}
         psycho.exits = {"N": None, "E": None, "S": None, "O": None} 
@@ -76,6 +101,7 @@ class Game:
             guilty=False
         )
 
+<<<<<<< HEAD
         suspect2 = Character(
             "Étudiant",
             "Un étudiant stressé, regard fuyant.",
@@ -83,6 +109,17 @@ class Game:
             alibi="Je révisais en philosophie.",
             guilty=True  # le meurtrier !
         )
+=======
+        BU.exits = {"N" : histoire, "E" : philosophie, "S" : société, "O" : techno, "U":None, "D":None}
+        histoire.exits = {"N" :hist_cont, "E" : None, "S" : BU, "O" : politique,"U":None,"D":None}
+        hist_cont.exits = {"N" :None, "E" :None, "S" : histoire, "O" : None,"U": None,"D":préhist}
+        politique.exits = {"N" :None, "E" :histoire, "S" : techno, "O" : None,"U":None,"D":None}
+        société.exits = {"N" :BU, "E" : None, "S" : environnement, "O" : None,"U":None,"D":None}
+        environnement.exits = {"N" :société, "E" :None, "S" : None, "O" : None,"U":None, "D":None}
+        philosophie.exits = {"N" :None, "E" : None, "S" : None, "O" :BU ,"U":psycho,"D":None }
+        techno.exits = {"N" :politique, "E" : BU, "S" :None, "O" : math,"U":None , "D":None}
+        maths.exits = {"N" :None, "E" : techno, "S" : None, "O" : None,"U": None, "D": None}
+>>>>>>> 0b09d69d414021633e710f7ce369544e0c58337e
 
         suspect3 = Character(
             "Professeur",
@@ -92,6 +129,7 @@ class Game:
             guilty=False
         )
 
+<<<<<<< HEAD
         suspect4 = Character(
             "Chercheuse",
             "Une scientifique en quête d’un ouvrage rare.",
@@ -114,6 +152,12 @@ class Game:
         politique.add_character(suspect3)    # professeur
         techno.add_character(suspect4)       # chercheuse
         société.add_character(suspect5)      # agent
+=======
+        
+        préhist.exits = {"N" :, "E" : tower, "S" : castle, "O" : None, "U":hist_cont, "D":None}
+        psycho.exits = {"N" :, "E" : tower, "S" : castle, "O" : None,"U":None, "D":philosophie}
+        
+>>>>>>> 0b09d69d414021633e710f7ce369544e0c58337e
 
 
         # --- JOUEUR ---
@@ -146,6 +190,16 @@ class Game:
             command.action(self, words, command.number_of_parameters)
 
 
+<<<<<<< HEAD
+=======
+    # Print the welcome message
+    def printh_welcome(self):
+        print(f"\nBienvenue {self.player.name} dans ce jeu d'énigme !")
+        print("Entrez 'help' si vous avez besoin d'aide.")
+        #
+        print(self.player.current_room.get_long_description())
+    
+>>>>>>> 0b09d69d414021633e710f7ce369544e0c58337e
 
 def main():
     Game().play()
