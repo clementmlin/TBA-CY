@@ -53,9 +53,8 @@ class Game:
         environnement.exits = {"N": société, "E": None, "S": None, "O": None}
 
         phylosophie.exits = {"N": None, "E": None, "S": None, "O": BU}
-        psycho.exits = {"N": None, "E": None, "S": None, "O": None}  # tu l’ajusteras
-        préhist.exits = {"N": None, "E": None, "S": None, "O": None}  # tu l’ajusteras
-
+        psycho.exits = {"N": None, "E": None, "S": None, "O": None} 
+        préhist.exits = {"N": None, "E": None, "S": None, "O": None}  
         techno.exits = {"N": politique, "E": BU, "S": None, "O": math}
         math.exits = {"N": None, "E": techno, "S": None, "O": None}
 
