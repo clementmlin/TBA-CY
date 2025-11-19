@@ -137,3 +137,74 @@ class Actions:
             print("\t- " + str(command))
         print()
         return True
+
+
+    def talk(game, list_of_words, number_of_parameters):
+        """
+        Parler à un personnage présent dans la salle.
+        """
+
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG1.format(command_word=command_word))
+            return False
+
+        name = list_of_words[1].lower()
+
+        for character in game.player.current_room.characters:
+            if character.name.lower() == name:
+                print(character.talk())
+                return True
+
+        print("Cette personne n'est pas ici.")
+        return False
+
+
+    def alibi(game, list_of_words, number_of_parameters):
+        """
+        Demander l'alibi d'un suspect.
+        """
+
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG1.format(command_word=command_word))
+            return False
+
+        name = list_of_words[1].lower()
+
+        for character in game.player.current_room.characters:
+            if character.name.lower() == name:
+                print(character.give_alibi())
+                return True
+
+        print("Cette personne n'est pas ici.")
+        return False
+
+
+    def accuse(game, list_of_words, number_of_parameters):
+        """
+        Accuser un suspect d'être le meurtrier.
+        """
+
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG1.format(command_word=command_word))
+            return False
+
+        name = list_of_words[1].lower()
+
+        for character in game.player.current_room.characters:
+            if character.name.lower() == name:
+                print(character.accuse())
+
+                if character.guilty:
+                    print("\n🎉 Vous avez résolu le meurtre !")
+                    game.finished = True
+
+                return True
+
+        print("Cette personne n'est pas ici.")
+        return False

@@ -1,132 +1,155 @@
-# Description: Game class
-
-# Import modules
-
 from room import Room
 from player import Player
 from command import Command
 from actions import Actions
+from character import Character
 
 class Game:
 
-    # Constructor
     def __init__(self):
         self.finished = False
         self.rooms = []
         self.commands = {}
         self.player = None
     
-    # Setup the game
+
     def setup(self):
 
-        # Setup commands
+        # --- COMMANDES ---
+        self.commands["help"] = Command("help", ": afficher cette aide", Actions.help, 0)
+        self.commands["quit"] = Command("quit", ": quitter le jeu", Actions.quit, 0)
+        self.commands["go"] = Command("go", "<direction> : se déplacer (N,E,S,O)", Actions.go, 1)
 
-        help = Command("help", " : afficher cette aide", Actions.help, 0)
-        self.commands["help"] = help
-        quit = Command("quit", " : quitter le jeu", Actions.quit, 0)
-        self.commands["quit"] = quit
-        go = Command("go", " <direction> : se déplacer dans une direction cardinale (N, E, S, O)", Actions.go, 1)
-        self.commands["go"] = go
+        self.commands["talk"] = Command("talk", "<nom> : parler à une personne", Actions.talk, 1)
+        self.commands["alibi"] = Command("alibi", "<nom> : demander l’alibi", Actions.alibi, 1)
+        self.commands["accuse"] = Command("accuse", "<nom> : accuser le suspect", Actions.accuse, 1)
+
+
+        # --- SALLES ---
+        BU = Room("Bibliothèque", "dans le hall principal de la BU.")
+        histoire = Room("Salle Histoire", "dans la salle d’histoire.")
+        hist_cont = Room("Histoire contemporaine", "dans la salle d'histoire contemporaine.")
+        politique = Room("Politique", "dans la salle politique.")
+        préhist = Room("Préhistoire", "dans la salle de préhistoire.")
+
+        société = Room("Société", "dans la salle société.")
+        environnement = Room("Environnement", "dans la salle environnement.")
+
+        phylosophie = Room("Philosophie", "dans la salle philosophie.")
+        psycho = Room("Psychologie", "dans la salle psychologie.")
+
+        techno = Room("Technologie", "dans la salle technologie.")
+        math = Room("Mathématiques", "dans la salle mathématiques.")
+
+
+        # --- SORTIES ---
+        BU.exits = {"N": histoire, "E": phylosophie, "S": société, "O": techno}
+
+        histoire.exits = {"N": hist_cont, "E": None, "S": BU, "O": politique}
+        hist_cont.exits = {"N": None, "E": None, "S": histoire, "O": None}
+        politique.exits = {"N": None, "E": histoire, "S": techno, "O": None}
         
-        # Setup rooms
-        #les salles au nord
-        BU = Room("Bibliothèque", "Le Hall de la BU, la salle principale.")
-        self.rooms.append(BU)
-        histoire = Room("salle histoire", ".")
-        self.rooms.append(histoire)
-        hist_cont = Room("salle histoire contemporaine", ".")
-        self.rooms.append(hist_cont)
-        politique = Room("politique", ".")
-        self.rooms.append(politique)
-        préhist = Room("préhist", ".")
-        self.rooms.append(préhist)
-        # les salles au sud
-        société= Room("salle société", ".")
-        self.rooms.append(société)
-        environnement = Room("salle environnement", ".")
-        self.rooms.append(environnement)
-        # les salles à l'est
-        phylosophie = Room("salle philosophie", ".")
-        self.rooms.append(phylosophie)
-        psycho = Room("salle psychologie", ".")
-        self.rooms.append(psycho)
-        # les salles à l'ouest
-        techno = Room("salle technologie", ".")
-        self.rooms.append(techno)
-        math = Room("salle mathématiques", ".")
-        self.rooms.append(math)
+        société.exits = {"N": BU, "E": None, "S": environnement, "O": None}
+        environnement.exits = {"N": société, "E": None, "S": None, "O": None}
 
-        # Create exits for rooms
+        phylosophie.exits = {"N": None, "E": None, "S": None, "O": BU}
+        psycho.exits = {"N": None, "E": None, "S": None, "O": None}  # tu l’ajusteras
+        préhist.exits = {"N": None, "E": None, "S": None, "O": None}  # tu l’ajusteras
+
+        techno.exits = {"N": politique, "E": BU, "S": None, "O": math}
+        math.exits = {"N": None, "E": techno, "S": None, "O": None}
+
+        # Enregistrer les salles
+        self.rooms = [
+            BU, histoire, hist_cont, politique, préhist,
+            société, environnement,
+            phylosophie, psycho,
+            techno, math
+        ]
 
 
+        # --- PNJ / SUSPECTS ---
+        suspect1 = Character(
+            "Bibliothécaire",
+            "Une femme calme, concentrée sur son travail.",
+            dialog="Avez-vous besoin d'aide ?",
+            alibi="Je rangeais les livres d'histoire dans la salle au nord.",
+            guilty=False
+        )
 
-        BU.exits = {"N" : histoire, "E" : phylosophie, "S" : société, "O" : techno}
-        histoire.exits = {"N" :hist_cont, "E" : None, "S" : BU, "O" : politique}
-        hist_cont.exits = {"N" :None, "E" :None, "S" : histoire, "O" : None}
-        politique.exits = {"N" :None, "E" :histoire, "S" : techno, "O" : None}
-        société.exits = {"N" :BU, "E" : None, "S" : environnement, "O" : None}
-        environnement.exits = {"N" :société, "E" :None, "S" : None, "O" : None}
-        phylosophie.exits = {"N" :None, "E" : None, "S" : None, "O" :BU}
-        techno.exits = {"N" :politique, "E" : BU, "S" :None, "O" : math}
-        maths.exits = {"N" :None, "E" : techno, "S" : None, "O" : None}
+        suspect2 = Character(
+            "Étudiant",
+            "Un étudiant stressé, regard fuyant.",
+            dialog="Hein ? Non, je… je faisais rien !",
+            alibi="Je révisais en philosophie.",
+            guilty=True  # le meurtrier !
+        )
 
-        #pour monter et descendre d'étage
+        suspect3 = Character(
+            "Professeur",
+            "Un professeur passionné de politique.",
+            dialog="On ne respecte plus rien de nos jours…",
+            alibi="Je débattais en salle de politique.",
+            guilty=False
+        )
 
-        
-        préhist.exits = {"N" :, "E" : tower, "S" : castle, "O" : None}
-        psycho.exits = {"N" :, "E" : tower, "S" : castle, "O" : None}
-        
+        suspect4 = Character(
+            "Chercheuse",
+            "Une scientifique en quête d’un ouvrage rare.",
+            dialog="Je cherchais un manuel en technologie.",
+            alibi="J’étais dans la salle techno.",
+            guilty=False
+        )
+
+        suspect5 = Character(
+            "Agent",
+            "Le gardien de la bibliothèque.",
+            dialog="Tout me semblait calme…",
+            alibi="Je surveillais la zone sud.",
+            guilty=False
+        )
+
+        # Placement des PNJ
+        BU.add_character(suspect1)           # bibliothécaire
+        phylosophie.add_character(suspect2)  # étudiant (meurtrier)
+        politique.add_character(suspect3)    # professeur
+        techno.add_character(suspect4)       # chercheuse
+        société.add_character(suspect5)      # agent
 
 
+        # --- JOUEUR ---
+        self.player = Player(input("\nEntrez votre nom : "))
+        self.player.current_room = BU
 
 
+    def print_welcome(self):
+        print(f"\nBienvenue {self.player.name} dans cette enquête mystérieuse !")
+        print("Entrez 'help' pour voir les commandes.")
+        print(self.player.current_room.get_long_description())
 
 
-   
-
-        # Setup player and starting room
-
-        self.player = Player(input("\nEntrez votre nom: "))
-        self.player.current_room = swamp
-
-    # Play the game
     def play(self):
         self.setup()
         self.print_welcome()
-        # Loop until the game is finished
+        
         while not self.finished:
-            # Get the command from the player
             self.process_command(input("> "))
-        return None
 
-    # Process the command entered by the player
-    def process_command(self, command_string) -> None:
 
-        # Split the command string into a list of words
-        list_of_words = command_string.split(" ")
+    def process_command(self, command_string):
+        words = command_string.split(" ")
+        cmd = words[0]
 
-        command_word = list_of_words[0]
-
-        # If the command is not recognized, print an error message
-        if command_word not in self.commands.keys():
-            print(f"\nCommande '{command_word}' non reconnue. Entrez 'help' pour voir la liste des commandes disponibles.\n")
-        # If the command is recognized, execute it
+        if cmd not in self.commands:
+            print("\nCommande inconnue. Tape 'help'.\n")
         else:
-            command = self.commands[command_word]
-            command.action(self, list_of_words, command.number_of_parameters)
+            command = self.commands[cmd]
+            command.action(self, words, command.number_of_parameters)
 
-    # Print the welcome message
-    def printh_welcome(self):
-        print(f"\nBienvenue {self.player.name} dans ce jeu d'aventure !")
-        print("Entrez 'help' si vous avez besoin d'aide.")
-        #
-        print(self.player.current_room.get_long_description())
-    
+
 
 def main():
-    # Create a game object and play the game
     Game().play()
-    
 
 if __name__ == "__main__":
     main()

@@ -2,11 +2,15 @@
 
 class Room:
 
+    def add_character(self, character):
+        self.characters.append(character)
+
     # Define the constructor. 
     def __init__(self, name, description):
         self.name = name
         self.description = description
         self.exits = {}
+        self.characters = []
     
     # Define the get_exit method.
     def get_exit(self, direction):
@@ -29,3 +33,18 @@ class Room:
     # Return a long description of this room including exits.
     def get_long_description(self):
         return f"\nVous êtes {self.description}\n\n{self.get_exit_string()}\n"
+
+
+    def get_long_description(self):
+        text = f"\nVous êtes {self.description}\n"
+
+    # --- Affichage des PNJ ---
+        if self.characters:
+            text += "\nPersonnes présentes :\n"
+            for c in self.characters:
+                text += f" - {c.name} : {c.description}\n"
+
+    # --- Affichage des sorties ---
+        text += "\n" + self.get_exit_string() + "\n"
+
+        return text
