@@ -70,7 +70,7 @@ class Game:
         techno.exits = {"N" :politique, "E" : BU, "S" :None, "O" : math}
         maths.exits = {"N" :None, "E" : techno, "S" : None, "O" : None}
 
-        #pour monter et descendrre d'étage
+        #pour monter et descendre d'étage
 
         
         préhist.exits = {"N" :, "E" : tower, "S" : castle, "O" : None}
