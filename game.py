@@ -67,7 +67,6 @@ class Game:
             techno, math
         ]
 
-
         # --- PNJ / SUSPECTS ---
         suspect1 = Character(
             "Bibliothécaire",
