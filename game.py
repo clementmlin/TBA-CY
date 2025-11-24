@@ -139,7 +139,8 @@ class Game:
     def process_command(self, command_string):
         words = command_string.split(" ")
         cmd = words[0]
-
+        if cmd =="":
+            continue
         if cmd not in self.commands:
             print("\nCommande inconnue. Tape 'help'.\n")
         else:
