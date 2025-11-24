@@ -47,8 +47,8 @@ class Game:
 
         histoire.exits = {"N": hist_cont, "E": None, "S": BU, "O": politique}
         hist_cont.exits = {"N": None, "E": None, "S": histoire, "O": None}
-        politique.exits = {"N": None, "E": histoire, "S": techno, "O": None}
-        
+        politique.exits = {"N": None, "E": None, "S": techno, "O": None}
+        techno.exits = {"N": None, "E": BU, "S": None, "O": math}
         société.exits = {"N": BU, "E": None, "S": environnement, "O": None}
         environnement.exits = {"N": société, "E": None, "S": None, "O": None}
 
@@ -56,7 +56,7 @@ class Game:
         psycho.exits = {"N": None, "E": None, "S": None, "O": None}
         préhist.exits = {"N": None, "E": None, "S": None, "O": None}
 
-        techno.exits = {"N": politique, "E": BU, "S": None, "O": math}
+        
         math.exits = {"N": None, "E": techno, "S": None, "O": None}
 
         # Enregistrer les salles
