@@ -135,17 +135,24 @@ class Game:
         while not self.finished:
             self.process_command(input("> "))
 
-
     def process_command(self, command_string):
-        words = command_string.split(" ")
+        # enlever les espaces en début/fin
+        command_string = command_string.strip()
+
+        # si l'utilisateur appuie juste sur Entrée (ou tape uniquement des espaces), ne rien faire
+        if not command_string:
+            return None
+
+        # split sans argument supprime les espaces multiples et évite des mots vides
+        words = command_string.split()
         cmd = words[0]
-        if cmd =="":
-            pass
+
         if cmd not in self.commands:
             print("\nCommande inconnue. Tape 'help'.\n")
         else:
             command = self.commands[cmd]
             command.action(self, words, command.number_of_parameters)
+
 
 
 
