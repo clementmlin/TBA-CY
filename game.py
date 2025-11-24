@@ -140,7 +140,7 @@ class Game:
         words = command_string.split(" ")
         cmd = words[0]
         if cmd =="":
-            continue
+            pass
         if cmd not in self.commands:
             print("\nCommande inconnue. Tape 'help'.\n")
         else:
