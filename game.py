@@ -47,8 +47,8 @@ class Game:
 
         histoire.exits = {"N": hist_cont, "E": None, "S": BU, "O": politique}
         hist_cont.exits = {"N": None, "E": None, "S": histoire, "O": None}
-        politique.exits = {"N": None, "E": histoire, "S": techno, "O": None}
-        
+        politique.exits = {"N": None, "E": None, "S": techno, "O": None}
+        techno.exits = {"N": None, "E": BU, "S": None, "O": math}
         société.exits = {"N": BU, "E": None, "S": environnement, "O": None}
         environnement.exits = {"N": société, "E": None, "S": None, "O": None}
 
@@ -56,7 +56,7 @@ class Game:
         psycho.exits = {"N": None, "E": None, "S": None, "O": None}
         préhist.exits = {"N": None, "E": None, "S": None, "O": None}
 
-        techno.exits = {"N": politique, "E": BU, "S": None, "O": math}
+        
         math.exits = {"N": None, "E": techno, "S": None, "O": None}
 
         # Enregistrer les salles
@@ -136,7 +136,15 @@ class Game:
 
 
     def process_command(self, command_string):
-        words = command_string.split(" ")
+    # enlever les espaces en début/fin
+        command_string = command_string.strip()
+
+    # si l'utilisateur appuie juste sur Entrée (ou tape uniquement des espaces), ne rien faire
+        if not command_string:
+            return None
+
+    # split sans argument supprime les espaces multiples et évite des mots vides
+        words = command_string.split()
         cmd = words[0]
 
         if cmd not in self.commands:
