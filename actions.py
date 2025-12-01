@@ -61,10 +61,10 @@ class Actions:
             return False
 
         nom_direc = {
-        'n': 'N', 'nord': 'N',
-        's': 'S', 'sud':  'S',
-        'e': 'E', 'est':  'E',
-        'o': 'O', 'ouest': 'O',
+        'n': 'N', 'nord': 'N','NORD': 'N', 'Nord': 'N',
+        's': 'S', 'sud':  'S','SUD': 'S', 'Sud':  'S',
+        'e': 'E', 'est':  'E','EST': 'E', 'Est':  'E',
+        'o': 'O', 'ouest': 'O','OUEST': 'O', 'Ouest': 'O',
 
         }
 
