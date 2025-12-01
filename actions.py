@@ -56,8 +56,29 @@ class Actions:
         # Get the direction from the list of words.
         direction = list_of_words[1]
         # Move the player in the direction specified by the parameter.
-        player.move(direction)
+        if direction is None:
+            print(f"Direction '{direction}' non reconnue.")
+            return False
+
+        nom_direc = {
+        'n': 'N', 'nord': 'N',
+        's': 'S', 'sud':  'S',
+        'e': 'E', 'est':  'E',
+        'o': 'O', 'ouest': 'O',
+
+        }
+
+        key = direction.strip().lower()
+        if key not in nom_direc:
+ 
+            print(f"Direction '{direction}' non reconnue.")
+            return False
+
+        final_direc = nom_direc[key]
+        player.move(final_direc)
         return True
+
+
 
     def quit(game, list_of_words, number_of_parameters):
         """
