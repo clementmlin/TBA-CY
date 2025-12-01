@@ -69,7 +69,7 @@ class Game:
 
         # --- PNJ / SUSPECTS ---
         suspect1 = Character(
-            "Bibliothécaire",
+            "bibliothécaire",
             "Une femme calme, concentrée sur son travail.",
             dialog="Avez-vous besoin d'aide ?",
             alibi="Je rangeais les livres d'histoire dans la salle au nord.",
@@ -77,7 +77,7 @@ class Game:
         )
 
         suspect2 = Character(
-            "Étudiant",
+            "étudiant",
             "Un étudiant stressé, regard fuyant.",
             dialog="Hein ? Non, je… je faisais rien !",
             alibi="Je révisais en philosophie.",
@@ -85,7 +85,7 @@ class Game:
         )
 
         suspect3 = Character(
-            "Professeur",
+            "professeur",
             "Un professeur passionné de politique.",
             dialog="On ne respecte plus rien de nos jours…",
             alibi="Je débattais en salle de politique.",
@@ -93,7 +93,7 @@ class Game:
         )
 
         suspect4 = Character(
-            "Chercheuse",
+            "chercheuse",
             "Une scientifique en quête d’un ouvrage rare.",
             dialog="Je cherchais un manuel en technologie.",
             alibi="J’étais dans la salle techno.",
@@ -101,7 +101,7 @@ class Game:
         )
 
         suspect5 = Character(
-            "Agent",
+            "agent",
             "Le gardien de la bibliothèque.",
             dialog="Tout me semblait calme…",
             alibi="Je surveillais la zone sud.",

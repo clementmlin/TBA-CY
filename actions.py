@@ -16,7 +16,23 @@ MSG0 = "\nLa commande '{command_word}' ne prend pas de paramètre.\n"
 # The MSG1 variable is used when the command takes 1 parameter.
 MSG1 = "\nLa commande '{command_word}' prend 1 seul paramètre.\n"
 
+CHARACTER_MAPPING = {
+    'bibliothecaire': 'bibliothécaire',
+    'b': 'bibliothécaire',
+    'etudiant': 'étudiant',
+    'e': 'étudiant',
+    'professeur': 'professeur',
+    'p': 'professeur',
+    'chercheuse': 'chercheuse',
+    'c': 'chercheuse',
+    'agent': 'agent',
+    'a': 'agent',
+}
+
 class Actions:
+
+
+    
 
     def go(game, list_of_words, number_of_parameters):
         """
@@ -173,6 +189,12 @@ class Actions:
 
         name = list_of_words[1].lower()
 
+        if name in CHARACTER_MAPPING:
+            name = CHARACTER_MAPPING[name]
+        else:
+            print(f"Personnage '{list_of_words[1]}' non reconnu.")
+            return False
+
         for character in game.player.current_room.characters:
             if character.name.lower() == name:
                 print(character.talk())
@@ -195,6 +217,12 @@ class Actions:
 
         name = list_of_words[1].lower()
 
+        if name in CHARACTER_MAPPING:
+            name = CHARACTER_MAPPING[name]
+        else:
+            print(f"Personnage '{list_of_words[1]}' non reconnu.")
+            return False
+
         for character in game.player.current_room.characters:
             if character.name.lower() == name:
                 print(character.give_alibi())
@@ -216,6 +244,12 @@ class Actions:
             return False
 
         name = list_of_words[1].lower()
+
+        if name in CHARACTER_MAPPING:
+            name = CHARACTER_MAPPING[name]
+        else:
+            print(f"Personnage '{list_of_words[1]}' non reconnu.")
+            return False
 
         for character in game.player.current_room.characters:
             if character.name.lower() == name:
