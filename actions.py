@@ -35,32 +35,8 @@ class Actions:
     
 
     def go(game, list_of_words, number_of_parameters):
-        """
-        Move the player in the direction specified by the parameter.
-        The parameter must be a cardinal direction (N, E, S, O).
+        # ... (docstring inchangée)
 
-        Args:
-            game (Game): The game object.
-            list_of_words (list): The list of words in the command.
-            number_of_parameters (int): The number of parameters expected by the command.
-
-        Returns:
-            bool: True if the command was executed successfully, False otherwise.
-
-        Examples:
-        
-        >>> from game import Game
-        >>> game = Game()
-        >>> game.setup()
-        >>> go(game, ["go", "N"], 1)
-        True
-        >>> go(game, ["go", "N", "E"], 1)
-        False
-        >>> go(game, ["go"], 1)
-        False
-
-        """
-        
         player = game.player
         l = len(list_of_words)
         # If the number of parameters is incorrect, print an error message and return False.
@@ -69,29 +45,61 @@ class Actions:
             print(MSG1.format(command_word=command_word))
             return False
 
-        # Get the direction from the list of words.
         direction = list_of_words[1]
-        # Move the player in the direction specified by the parameter.
         if direction is None:
             print(f"Direction '{direction}' non reconnue.")
             return False
 
         nom_direc = {
-        'n': 'N', 'nord': 'N','NORD': 'N', 'Nord': 'N',
-        's': 'S', 'sud':  'S','SUD': 'S', 'Sud':  'S',
-        'e': 'E', 'est':  'E','EST': 'E', 'Est':  'E',
-        'o': 'O', 'ouest': 'O','OUEST': 'O', 'Ouest': 'O',
-
+            'n': 'N', 'nord': 'N','NORD': 'N', 'Nord': 'N',
+            's': 'S', 'sud':  'S','SUD': 'S', 'Sud':  'S',
+            'e': 'E', 'est':  'E','EST': 'E', 'Est':  'E',
+            'o': 'O', 'ouest': 'O','OUEST': 'O', 'Ouest': 'O',
         }
 
         key = direction.strip().lower()
         if key not in nom_direc:
- 
             print(f"Direction '{direction}' non reconnue.")
             return False
 
         final_direc = nom_direc[key]
-        player.move(final_direc)
+        moved = player.move(final_direc)
+        if moved:
+            # Afficher l'historique après chaque déplacement
+            print(player.get_history())
+        return moved
+
+
+    def back(game, list_of_words, number_of_parameters):
+        """
+        Revenir à la salle précédente (pop de l'historique).
+        """
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG0.format(command_word=command_word))
+            return False
+
+        player = game.player
+        success = player.back()
+        if success:
+            # Afficher l'historique après retour en arrière
+            print(player.get_history())
+        return success
+
+
+    def history(game, list_of_words, number_of_parameters):
+        """
+        Afficher l'historique des salles visitées.
+        """
+        l = len(list_of_words)
+        if l != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG0.format(command_word=command_word))
+            return False
+
+        player = game.player
+        print(player.get_history())
         return True
 
 

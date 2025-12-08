@@ -20,6 +20,9 @@ class Game:
         self.commands["quit"] = Command("quit", ": quitter le jeu", Actions.quit, 0)
         self.commands["go"] = Command("go", "<direction> : se déplacer (N,E,S,O)", Actions.go, 1)
 
+        self.commands["history"] = Command("history", ": afficher l'historique des salles visitées", Actions.history, 0)
+        self.commands["back"] = Command("back", ": revenir à la salle précédente", Actions.back, 0)
+
         self.commands["talk"] = Command("talk", "<nom> : parler à une personne", Actions.talk, 1)
         self.commands["alibi"] = Command("alibi", "<nom> : demander l’alibi", Actions.alibi, 1)
         self.commands["accuse"] = Command("accuse", "<nom> : accuser le suspect", Actions.accuse, 1)
