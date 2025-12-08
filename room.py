@@ -11,6 +11,19 @@ class Room:
         self.description = description
         self.exits = {}
         self.characters = []
+        self.inventory={}
+    
+    
+    def get_inventory():
+        if not self.inventory:
+            return "votre inventaire est vide"
+        
+        inventory_str = "Vous disposez des items suivants :\n"
+        for item in self.inventory:
+            inventory_str += f"    - {item}\n"
+        return inventory_str.rstrip()
+    
+
     
     # Define the get_exit method.
     def get_exit(self, direction):

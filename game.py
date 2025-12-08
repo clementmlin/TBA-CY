@@ -3,6 +3,7 @@ from player import Player
 from command import Command
 from actions import Actions
 from character import Character
+from item import Items
 
 class Game:
 

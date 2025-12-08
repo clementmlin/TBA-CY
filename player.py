@@ -7,6 +7,17 @@ class Player():
         self.current_room = None
         # Historique : liste de Room déjà visitées (dans l'ordre)
         self.history = []
+        self.inventory={}
+
+    
+    def get_inventory():
+        if not self.inventory:
+            return "Votre inventaire est vide."
+
+        inventory_str = "Vous disposez des items suivants :\n"
+        for item in self.inventory:
+            inventory_str += f"    - {item}\n"
+        return inventory_str.rstrip()
 
     # Define the move method.
     def move(self, direction):
