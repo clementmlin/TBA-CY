@@ -126,6 +126,7 @@ class Game:
 
 
     def print_welcome(self):
+        print ("Cette nuit-là, au cœur d’un hiver glacial de 1999, la bibliothèque Hogward s’apprêtait enfin à fermer ses portes après une journée interminable. Pourtant, alors que le silence retombait lentement sur les lieux, un événement tragique vint déchirer la quiétude de la BU. Dans l’une des salles les plus froides, le corps sans vie d’un homme d’une soixantaine d’années fut découvert.\nq")
         print(f"\nBienvenue {self.player.name} dans cette enquête mystérieuse !")
         print("Entrez 'help' pour voir les commandes.")
         print(self.player.current_room.get_long_description())
