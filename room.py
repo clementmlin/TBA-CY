@@ -1,20 +1,26 @@
 # Define the Room class.
-
+from item import Item
 class Room:
 
-    def add_character(self, character):
-        self.characters.append(character)
+    
 
     # Define the constructor. 
-    def __init__(self, name, description):
+    def __init__(self, name, description=""):
         self.name = name
         self.description = description
         self.exits = {}
         self.characters = []
         self.inventory={}
+        self.items = []
+
+    def add_item(self, item):
+        self.items.append(item)
+        
+    def add_character(self, character):
+        self.characters.append(character)
     
     
-    def get_inventory():
+    def get_inventory(self):
         if not self.inventory:
             return "votre inventaire est vide"
         
@@ -23,7 +29,7 @@ class Room:
             inventory_str += f"    - {item}\n"
         return inventory_str.rstrip()
     
-
+    
     
     # Define the get_exit method.
     def get_exit(self, direction):

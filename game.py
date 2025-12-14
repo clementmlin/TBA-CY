@@ -3,7 +3,8 @@ from player import Player
 from command import Command
 from actions import Actions
 from character import Character
-from item import Items
+from item import Item
+#from item import Item
 
 class Game:
 
@@ -12,6 +13,9 @@ class Game:
         self.rooms = []
         self.commands = {}
         self.player = None
+        self.current_room = None
+    def play(self):
+        print(self.current_room.name)
     
 
     def setup(self):
@@ -112,6 +116,37 @@ class Game:
             guilty=False
         )
 
+                    #  Objets à placer
+        arme_crime = Item(
+            "Arme du crime",
+            "Une lourde sculpture en métal, ensanglantée. Indice majeur.",
+            5
+        )
+
+        livre_enigme = Item(
+            "Livre ancien",
+            "Un livre poussiéreux dont certaines pages semblent annotées à la main.",
+            2
+        )
+
+        cle_usb = Item(
+            "Clé USB",
+            "Une clé USB contenant des fichiers suspects.",
+            0.05
+        )
+
+        ordinateur = Item(
+            "Ordinateur",
+            "Un ordinateur allumé sur lequel tu peux tenter de lire la clé USB.",
+            3
+        )
+                # 📍 Ajouter les objets dans les salles correspondantes
+        psycho.add_item(arme_crime)
+        histoire.add_item(livre_enigme)
+        techno.add_item(cle_usb)
+        techno.add_item(ordinateur)
+
+
         # Placement des PNJ
         BU.add_character(suspect1)           # bibliothécaire
         phylosophie.add_character(suspect2)  # étudiant (meurtrier)
@@ -123,9 +158,12 @@ class Game:
         # --- JOUEUR ---
         self.player = Player(input("\nEntrez votre nom : "))
         self.player.current_room = BU
-
+        self.current_room = BU  
+        
+        self.commands["look"] = Command("look", ": observer la salle", Actions.look, 0)
 
     def print_welcome(self):
+        print ("Cette nuit-là, au cœur d’un hiver glacial de 1999, la bibliothèque Hogward s’apprêtait enfin à fermer ses portes après une journée interminable.\n Pourtant, alors que le silence retombait lentement sur les lieux, un événement tragique vint déchirer la quiétude de la BU.\n Dans l’une des salles les plus froides, le corps sans vie d’un homme d’une soixantaine d’années fut découvert.\n")
         print(f"\nBienvenue {self.player.name} dans cette enquête mystérieuse !")
         print("Entrez 'help' pour voir les commandes.")
         print(self.player.current_room.get_long_description())
@@ -168,7 +206,8 @@ class Game:
 
 
 def main():
-    Game().play()
-
+    game = Game()
+    game.setup()
+    game.play()
 if __name__ == "__main__":
     main()

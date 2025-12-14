@@ -63,11 +63,22 @@ class Actions:
             return False
 
         final_direc = nom_direc[key]
-        moved = player.move(final_direc)
-        if moved:
-            # Afficher l'historique après chaque déplacement
-            print(player.get_history())
-        return moved
+         # Vérifier si la sortie existe dans la salle actuelle
+        if final_direc in game.current_room.exits and game.current_room.exits[final_direc]:
+            # Mettre à jour current_room
+            game.current_room = game.current_room.exits[final_direc]
+            player.current_room = game.current_room
+
+            # Ajouter la salle à l'historique si tu utilises player.move
+            if hasattr(player, "history"):
+                player.history.append(game.current_room.name)
+
+            # Afficher automatiquement la salle après déplacement
+            Actions.look(game)
+            return True
+        else:
+            print("Vous ne pouvez pas aller dans cette direction.")
+            return False
 
 
     def back(game, list_of_words, number_of_parameters):
@@ -271,3 +282,54 @@ class Actions:
 
         print("Cette personne n'est pas ici.")
         return False
+    
+    def __init__(self,room):
+        self.room= room
+        
+    def look(game, list_of_words=None, number_of_parameters=0):
+        room = game.current_room
+        output = f"Vous êtes dans {room.name} : {room.description}\n"
+
+        # Objets
+        if room.items:
+            output += "Objets dans la salle :\n"
+            for item in room.items:
+                output += f"  - {item}\n"
+        else:
+            output += "Il n'y a aucun objet dans cette salle.\n"
+
+        # Personnages
+        if room.characters:
+            output += "Personnages présents :\n"
+            for char in room.characters:
+                output += f"  - {char.name}\n"
+
+        # Directions possibles
+        exits = [dir for dir, salle in room.exits.items() if salle is not None]
+        if exits:
+            dir_str = ", ".join(exits)
+            output += f"Sorties possibles : {dir_str}\n"
+        else:
+            output += "Aucune sortie disponible.\n"
+
+        print(output)
+
+    def inspect(self, game, list_of_words, number_of_parameters):
+        # Vérifier qu'on a bien le bon nombre de paramètres
+        if number_of_parameters != 1:
+            return "Utilise : inspect <objet>"
+
+        room = game.current_room
+        cible = list_of_words[0].lower()
+
+        # Chercher l’objet dans la salle
+        for item in room.items:
+            if item.name.lower() == cible:
+                if item.name.lower() == "ordinateur":
+                    # Si on inspecte l’ordinateur, et que la clé USB est présente
+                    for maybe_usb in room.items:
+                        if maybe_usb.name.lower() == "clé usb":
+                            return "Tu lis les fichiers de la clé USB… Le contenu est révélateur !"
+                    return "Il n’y a pas de clé USB à lire ici."
+                return str(item)  # Affiche description
+        return "Cet objet n'est pas ici."
