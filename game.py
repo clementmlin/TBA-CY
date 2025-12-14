@@ -119,22 +119,26 @@ class Game:
                     #  Objets à placer
         arme_crime = Item(
             "Arme du crime",
-            "Une lourde sculpture en métal, ensanglantée. Indice majeur."
+            "Une lourde sculpture en métal, ensanglantée. Indice majeur.",
+            weight=5
         )
 
         livre_enigme = Item(
             "Livre ancien",
-            "Un livre poussiéreux dont certaines pages semblent annotées à la main."
+            "Un livre poussiéreux dont certaines pages semblent annotées à la main.",
+            weight=2
         )
 
         cle_usb = Item(
             "Clé USB",
-            "Une clé USB contenant des fichiers suspects."
+            "Une clé USB contenant des fichiers suspects.",
+            weight=0.05
         )
 
         ordinateur = Item(
             "Ordinateur",
-            "Un ordinateur allumé sur lequel tu peux tenter de lire la clé USB."
+            "Un ordinateur allumé sur lequel tu peux tenter de lire la clé USB.",
+            weight=3
         )
                 # 📍 Ajouter les objets dans les salles correspondantes
         psycho.add_item(arme_crime)
