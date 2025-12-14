@@ -18,7 +18,7 @@ class Game:
         print(self.current_room.name)
     
 
-    def setup(self):
+    def setup(self,game):
 
         # --- COMMANDES ---
         self.commands["help"] = Command("help", ": afficher cette aide", Actions.help, 0)
@@ -154,7 +154,7 @@ class Game:
         # --- JOUEUR ---
         self.player = Player(input("\nEntrez votre nom : "))
         self.player.current_room = BU
-        return BU
+        game.current_room= BU
 
     def print_welcome(self):
         print ("Cette nuit-là, au cœur d’un hiver glacial de 1999, la bibliothèque Hogward s’apprêtait enfin à fermer ses portes après une journée interminable.\n Pourtant, alors que le silence retombait lentement sur les lieux, un événement tragique vint déchirer la quiétude de la BU.\n Dans l’une des salles les plus froides, le corps sans vie d’un homme d’une soixantaine d’années fut découvert.\n")
@@ -201,7 +201,7 @@ class Game:
 
 def main():
     game = Game()
-    game.current_room = setup()
+    setup(game)
     game.play()
 
 if __name__ == "__main__":
