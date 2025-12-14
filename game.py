@@ -6,9 +6,6 @@ from character import Character
 from item import Item
 #from item import Item
 
-test_item = Item("Test", "Objet test", 1)
-print(test_item)
-
 class Game:
 
     def __init__(self):
@@ -160,8 +157,9 @@ class Game:
 
         # --- JOUEUR ---
         self.player = Player(input("\nEntrez votre nom : "))
-        self.player.current_room = psycho
-        self.current_room= psycho
+        self.player.current_room = BU
+        self.current_room = BU  
+        
         self.commands["look"] = Command("look", ": observer la salle", Actions.look, 0)
 
     def print_welcome(self):
