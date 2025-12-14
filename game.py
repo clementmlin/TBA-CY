@@ -8,7 +8,7 @@ from item import Item
 
 class Game:
 
-    def __init__(self,current_room):
+    def __init__(self):
         self.finished = False
         self.rooms = []
         self.commands = {}
