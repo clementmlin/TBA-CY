@@ -13,7 +13,7 @@ class Game:
         self.rooms = []
         self.commands = {}
         self.player = None
-        self.current_room = current_room
+        self.current_room = None
     
 
     def setup(self):
@@ -152,7 +152,7 @@ class Game:
         # --- JOUEUR ---
         self.player = Player(input("\nEntrez votre nom : "))
         self.player.current_room = BU
-
+        return BU
 
     def print_welcome(self):
         print ("Cette nuit-là, au cœur d’un hiver glacial de 1999, la bibliothèque Hogward s’apprêtait enfin à fermer ses portes après une journée interminable.\n Pourtant, alors que le silence retombait lentement sur les lieux, un événement tragique vint déchirer la quiétude de la BU.\n Dans l’une des salles les plus froides, le corps sans vie d’un homme d’une soixantaine d’années fut découvert.\n")
@@ -198,7 +198,9 @@ class Game:
 
 
 def main():
-    Game().play()
+    game = Game()
+    game.current_room = setup()
+    game.play()
 
 if __name__ == "__main__":
     main()
