@@ -275,19 +275,23 @@ class Actions:
     def __init__(self,room):
         self.room= room
         
-    def look(game, list_of_words, number_of_parameters):
-        if number_of_parameters != 0:
-            return "La commende 'look' ne prend aucun parameters" 
-        room =game.current_room
+    def look(game, list_of_words=None, number_of_parameters=0):
+        room = game.current_room
+        output = f"Vous êtes dans {room.name} : {room.description}\n"
 
-        if not room.items:
-            return "il n'y aaucun objet dans cette pièce"
-        result = "Vous voyez les objets suivants :\n"
-        for item in room.items:
-            result += f" - {item}\n"
-    
-        return result.rstrip()
-    
+        if room.items:
+            output += "Objets dans la salle :\n"
+            for item in room.items:
+                output += f"  - {item}\n"
+        else:
+            output += "Il n'y a aucun objet dans cette salle.\n"
+
+        if room.characters:
+            output += "Personnages présents :\n"
+            for char in room.characters:
+                output += f"  - {char.name}\n"
+
+        return output
 
     def inspect(self, game, list_of_words, number_of_parameters):
         # Vérifier qu'on a bien le bon nombre de paramètres

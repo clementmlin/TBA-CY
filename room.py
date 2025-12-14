@@ -2,11 +2,10 @@
 from item import Item
 class Room:
 
-    def add_character(self, character):
-        self.characters.append(character)
+    
 
     # Define the constructor. 
-    def __init__(self, name, description):
+    def __init__(self, name, description=""):
         self.name = name
         self.description = description
         self.exits = {}
@@ -16,6 +15,9 @@ class Room:
 
     def add_item(self, item):
         self.items.append(item)
+        
+    def add_character(self, character):
+        self.characters.append(character)
     
     
     def get_inventory(self):
