@@ -4,7 +4,10 @@ from command import Command
 from actions import Actions
 from character import Character
 from item import Item
+#from item import Item
 
+test_item = Item("Test", "Objet test", 1)
+print(test_item)
 
 class Game:
 
