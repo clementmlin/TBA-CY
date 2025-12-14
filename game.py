@@ -3,15 +3,17 @@ from player import Player
 from command import Command
 from actions import Actions
 from character import Character
-from item import Items
+from item import Item
+
 
 class Game:
 
-    def __init__(self):
+    def __init__(self,current_room):
         self.finished = False
         self.rooms = []
         self.commands = {}
         self.player = None
+        self.current_room = current_room
     
 
     def setup(self):
@@ -111,6 +113,33 @@ class Game:
             alibi="Je surveillais la zone sud.",
             guilty=False
         )
+
+                    #  Objets à placer
+        arme_crime = Item(
+            "Arme du crime",
+            "Une lourde sculpture en métal, ensanglantée. Indice majeur."
+        )
+
+        livre_enigme = Item(
+            "Livre ancien",
+            "Un livre poussiéreux dont certaines pages semblent annotées à la main."
+        )
+
+        cle_usb = Item(
+            "Clé USB",
+            "Une clé USB contenant des fichiers suspects."
+        )
+
+        ordinateur = Item(
+            "Ordinateur",
+            "Un ordinateur allumé sur lequel tu peux tenter de lire la clé USB."
+        )
+                # 📍 Ajouter les objets dans les salles correspondantes
+        psycho.add_item(arme_crime)
+        histoire.add_item(livre_enigme)
+        techno.add_item(cle_usb)
+        techno.add_item(ordinateur)
+
 
         # Placement des PNJ
         BU.add_character(suspect1)           # bibliothécaire

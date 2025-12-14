@@ -271,3 +271,40 @@ class Actions:
 
         print("Cette personne n'est pas ici.")
         return False
+    
+    def __init__(self,room):
+        self.room= room
+        
+    def look(game, list_of_words, number_of_parameters):
+        if number_of_parameters != 0:
+            return "La commende 'look' ne prend aucun parameters" 
+        room =game.current_room
+
+        if not room.items:
+            return "il n'y aaucun objet dans cette pièce"
+        result = "Vous voyez les objets suivants :\n"
+        for item in room.items:
+            result += f" - {item}\n"
+    
+        return result.rstrip()
+    
+
+    def inspect(self, game, list_of_words, number_of_parameters):
+        # Vérifier qu'on a bien le bon nombre de paramètres
+        if number_of_parameters != 1:
+            return "Utilise : inspect <objet>"
+
+        room = game.current_room
+        cible = list_of_words[0].lower()
+
+        # Chercher l’objet dans la salle
+        for item in room.items:
+            if item.name.lower() == cible:
+                if item.name.lower() == "ordinateur":
+                    # Si on inspecte l’ordinateur, et que la clé USB est présente
+                    for maybe_usb in room.items:
+                        if maybe_usb.name.lower() == "clé usb":
+                            return "Tu lis les fichiers de la clé USB… Le contenu est révélateur !"
+                    return "Il n’y a pas de clé USB à lire ici."
+                return str(item)  # Affiche description
+        return "Cet objet n'est pas ici."

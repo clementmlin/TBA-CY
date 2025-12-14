@@ -10,7 +10,7 @@ class Player():
         self.inventory={}
 
     
-    def get_inventory():
+    def get_inventory(self):
         if not self.inventory:
             return "Votre inventaire est vide."
 
