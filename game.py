@@ -14,6 +14,8 @@ class Game:
         self.commands = {}
         self.player = None
         self.current_room = None
+    def play(self):
+        print(self.current_room.name)
     
 
     def setup(self):
