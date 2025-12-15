@@ -4,7 +4,7 @@ from command import Command
 from actions import Actions
 from character import Character
 from item import Item
-#from item import Item
+
 
 class Game:
 
@@ -14,73 +14,90 @@ class Game:
         self.commands = {}
         self.player = None
         self.current_room = None
-    def play(self):
-        print(self.current_room.name)
-    
 
     def setup(self):
 
-        # --- COMMANDES ---
+        # ---------- COMMANDES ----------
         self.commands["help"] = Command("help", ": afficher cette aide", Actions.help, 0)
         self.commands["quit"] = Command("quit", ": quitter le jeu", Actions.quit, 0)
         self.commands["go"] = Command("go", "<direction> : se déplacer (N,E,S,O)", Actions.go, 1)
-
-        self.commands["history"] = Command("history", ": afficher l'historique des salles visitées", Actions.history, 0)
+        self.commands["look"] = Command("look", ": observer la salle", Actions.look, 0)
+        self.commands["history"] = Command("history", ": afficher l’historique", Actions.history, 0)
         self.commands["back"] = Command("back", ": revenir à la salle précédente", Actions.back, 0)
 
         self.commands["talk"] = Command("talk", "<nom> : parler à une personne", Actions.talk, 1)
         self.commands["alibi"] = Command("alibi", "<nom> : demander l’alibi", Actions.alibi, 1)
         self.commands["accuse"] = Command("accuse", "<nom> : accuser le suspect", Actions.accuse, 1)
 
-
-        # --- SALLES ---
+        # ---------- SALLES ----------
         BU = Room("Bibliothèque", "dans le hall principal de la BU.")
         histoire = Room("Salle Histoire", "dans la salle d’histoire.")
         hist_cont = Room("Histoire contemporaine", "dans la salle d'histoire contemporaine.")
         politique = Room("Politique", "dans la salle politique.")
         préhist = Room("Préhistoire", "dans la salle de préhistoire.")
-
         société = Room("Société", "dans la salle société.")
         environnement = Room("Environnement", "dans la salle environnement.")
-
-        phylosophie = Room("Philosophie", "dans la salle philosophie.")
+        philosophie = Room("Philosophie", "dans la salle philosophie.")
         psycho = Room("Psychologie", "dans la salle psychologie.")
-
         techno = Room("Technologie", "dans la salle technologie.")
         math = Room("Mathématiques", "dans la salle mathématiques.")
 
+        # ---------- SORTIES ----------
+        BU.exits = {"N": histoire, "E": philosophie, "S": société, "O": techno}
 
-        # --- SORTIES ---
-        BU.exits = {"N": histoire, "E": phylosophie, "S": société, "O": techno}
+        histoire.exits = {"N": hist_cont, "S": BU, "O": politique}
+        hist_cont.exits = {"S": histoire}
+        politique.exits = {"S": techno}
+        techno.exits = {"E": BU, "O": math}
+        société.exits = {"N": BU, "S": environnement}
+        environnement.exits = {"N": société}
 
-        histoire.exits = {"N": hist_cont, "E": None, "S": BU, "O": politique}
-        hist_cont.exits = {"N": None, "E": None, "S": histoire, "O": None}
-        politique.exits = {"N": None, "E": None, "S": techno, "O": None}
-        techno.exits = {"N": None, "E": BU, "S": None, "O": math}
-        société.exits = {"N": BU, "E": None, "S": environnement, "O": None}
-        environnement.exits = {"N": société, "E": None, "S": None, "O": None}
+        philosophie.exits = {"O": BU}
+        psycho.exits = {}
+        préhist.exits = {}
+        math.exits = {"E": techno}
 
-        phylosophie.exits = {"N": None, "E": None, "S": None, "O": BU}
-        psycho.exits = {"N": None, "E": None, "S": None, "O": None}
-        préhist.exits = {"N": None, "E": None, "S": None, "O": None}
-
-        
-        math.exits = {"N": None, "E": techno, "S": None, "O": None}
-
-        # Enregistrer les salles
         self.rooms = [
             BU, histoire, hist_cont, politique, préhist,
-            société, environnement,
-            phylosophie, psycho,
-            techno, math
+            société, environnement, philosophie, psycho, techno, math
         ]
 
-        # --- PNJ / SUSPECTS ---
+        # ---------- OBJETS ----------
+        arme_crime = Item(
+            "Arme du crime",
+            "Une lourde sculpture en métal, ensanglantée. Indice majeur.",
+            5
+        )
+
+        livre_enigme = Item(
+            "Livre ancien",
+            "Un livre poussiéreux dont certaines pages semblent annotées à la main.",
+            2
+        )
+
+        cle_usb = Item(
+            "Clé USB",
+            "Une clé USB contenant des fichiers suspects.",
+            0.05
+        )
+
+        ordinateur = Item(
+            "Ordinateur",
+            "Un ordinateur allumé sur lequel tu peux tenter de lire la clé USB.",
+            3
+        )
+
+        psycho.add_item(arme_crime)
+        histoire.add_item(livre_enigme)
+        techno.add_item(cle_usb)
+        techno.add_item(ordinateur)
+
+        # ---------- PNJ ----------
         suspect1 = Character(
             "bibliothécaire",
             "Une femme calme, concentrée sur son travail.",
             dialog="Avez-vous besoin d'aide ?",
-            alibi="Je rangeais les livres d'histoire dans la salle au nord.",
+            alibi="Je rangeais les livres d'histoire.",
             guilty=False
         )
 
@@ -89,7 +106,7 @@ class Game:
             "Un étudiant stressé, regard fuyant.",
             dialog="Hein ? Non, je… je faisais rien !",
             alibi="Je révisais en philosophie.",
-            guilty=True  # le meurtrier !
+            guilty=True
         )
 
         suspect3 = Character(
@@ -116,98 +133,54 @@ class Game:
             guilty=False
         )
 
-                    #  Objets à placer
-        arme_crime = Item(
-            "Arme du crime",
-            "Une lourde sculpture en métal, ensanglantée. Indice majeur.",
-            5
-        )
+        BU.add_character(suspect1)
+        philosophie.add_character(suspect2)
+        politique.add_character(suspect3)
+        techno.add_character(suspect4)
+        société.add_character(suspect5)
 
-        livre_enigme = Item(
-            "Livre ancien",
-            "Un livre poussiéreux dont certaines pages semblent annotées à la main.",
-            2
-        )
-
-        cle_usb = Item(
-            "Clé USB",
-            "Une clé USB contenant des fichiers suspects.",
-            0.05
-        )
-
-        ordinateur = Item(
-            "Ordinateur",
-            "Un ordinateur allumé sur lequel tu peux tenter de lire la clé USB.",
-            3
-        )
-                # 📍 Ajouter les objets dans les salles correspondantes
-        psycho.add_item(arme_crime)
-        histoire.add_item(livre_enigme)
-        techno.add_item(cle_usb)
-        techno.add_item(ordinateur)
-
-
-        # Placement des PNJ
-        BU.add_character(suspect1)           # bibliothécaire
-        phylosophie.add_character(suspect2)  # étudiant (meurtrier)
-        politique.add_character(suspect3)    # professeur
-        techno.add_character(suspect4)       # chercheuse
-        société.add_character(suspect5)      # agent
-
-
-        # --- JOUEUR ---
+        # ---------- JOUEUR ----------
         self.player = Player(input("\nEntrez votre nom : "))
         self.player.current_room = BU
-        self.current_room = BU  
-        
-        self.commands["look"] = Command("look", ": observer la salle", Actions.look, 0)
+        self.current_room = BU
 
     def print_welcome(self):
-        print ("Cette nuit-là, au cœur d’un hiver glacial de 1999, la bibliothèque Hogward s’apprêtait enfin à fermer ses portes après une journée interminable.\n Pourtant, alors que le silence retombait lentement sur les lieux, un événement tragique vint déchirer la quiétude de la BU.\n Dans l’une des salles les plus froides, le corps sans vie d’un homme d’une soixantaine d’années fut découvert.\n")
-        print(f"\nBienvenue {self.player.name} dans cette enquête mystérieuse !")
-        print("Entrez 'help' pour voir les commandes.")
-        print(self.player.current_room.get_long_description())
-
+        print(
+            "Cette nuit-là, au cœur d’un hiver glacial de 1999, "
+            "la bibliothèque Hogward s’apprêtait à fermer ses portes.\n"
+            "Mais un meurtre vint briser le silence…\n"
+        )
+        print(f"Bienvenue {self.player.name} dans cette enquête !")
+        print("Tape 'help' pour voir les commandes.\n")
+        Actions.look(self)
 
     def play(self):
         self.setup()
         self.print_welcome()
-        
+
         while not self.finished:
             self.process_command(input("> "))
 
     def process_command(self, command_string):
-    # enlever les espaces en début/fin
         command_string = command_string.strip()
-
-    # si l'utilisateur appuie juste sur Entrée (ou tape uniquement des espaces), ne rien faire
         if not command_string:
-            return None
+            return
 
-    # split sans argument supprime les espaces multiples et évite des mots vides
-        # enlever les espaces en début/fin
-        command_string = command_string.strip()
-
-        # si l'utilisateur appuie juste sur Entrée (ou tape uniquement des espaces), ne rien faire
-        if not command_string:
-            return None
-
-        # split sans argument supprime les espaces multiples et évite des mots vides
         words = command_string.split()
         cmd = words[0]
 
         if cmd not in self.commands:
-            print("\nCommande inconnue. Tape 'help'.\n")
-        else:
-            command = self.commands[cmd]
-            command.action(self, words, command.number_of_parameters)
+            print("Commande inconnue.")
+            return
 
-
+        command = self.commands[cmd]
+        command.action(self, words, command.number_of_parameters)
 
 
 def main():
     game = Game()
-    game.setup()
     game.play()
+
+
 if __name__ == "__main__":
     main()
