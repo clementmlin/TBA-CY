@@ -173,3 +173,59 @@ class Actions:
 
         print("Cette personne n'est pas ici.")
         return False
+
+def quests(game, list_of_words, number_of_parameters):
+    n=len(list_of_words)
+    if n != number_of_parameters + 1:
+        command_word=list_of_words[0]
+        print(MSG0.format(command_word=list_of_words[0]))
+        return False
+    # Affichage des quêtes
+    game.player.quest_manager.show_quests()
+    return True
+def quest(game, list_of_words, number_of_parameters):
+    n=len(list_of_words)
+    if n < number_of_parameters + 1:
+        command_word=list_of_words[0]
+        print(MSG1.format(command_word=command_word))
+        return False
+    
+    quest_title=" ".join(list_of_words[1:])
+
+    current_count={
+        "Se déplacer": game.player.move_count
+    }
+
+    #afficher les détails des quêtes
+    game.player.quest_manager.update_quests(current_count)
+    return True
+def activate(game, list_of_words, number_of_parameters):
+    n = len(list_of_words)
+    if n < number_of_parameters + 1:
+        command_word = list_of_words[0]
+        print(MSG1.format(command_word=command_word))
+        return False
+
+        # Get the quest title from the list of words (join all words after command)
+    quest_title = " ".join(list_of_words[1:])
+
+        # Try to activate the quest
+    if game.player.quest_manager.activate_quest(quest_title):
+        return True
+
+    msg1 = f"\nImpossible d'activer la quête '{quest_title}'. "
+    msg2 = "Vérifiez le nom ou si elle n'est pas déjà active.\n"
+    print(msg1 + msg2)
+        # print(f"\nImpossible d'activer la quête '{quest_title}'. \
+        #             Vérifiez le nom ou si elle n'est pas déjà active.\n")
+    return False
+def rewards(game, list_of_words, number_of_parameters):
+    n = len(list_of_words)
+    if n != number_of_parameters + 1:
+        command_word = list_of_words[0]
+        print(MSG0.format(command_word=command_word))
+        return False
+
+        # Show all rewards
+    game.player.show_rewards()
+    return True

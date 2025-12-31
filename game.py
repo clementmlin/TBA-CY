@@ -4,6 +4,7 @@ from command import Command
 from actions import Actions
 from character import Character
 from item import Item
+from quest import Quest
 
 
 
