@@ -166,6 +166,22 @@ class Game:
             ],
             reward="Badge d'enquêteur"
         )
+        créer_un_robot = Quest(
+            title="Créer un robot",
+            description="Utilisez les éléments pour créer un robot.",
+            target_items=[
+                Item("Circuit imprimé", "Un circuit imprimé essentiel pour un robot.", 0.2),
+                Item("Capteurs", "Des capteurs pour permettre au robot de percevoir son environnement.", 0.1),
+                Item("Moteurs", "Des moteurs pour permettre au robot de se déplacer.", 0.5)
+            ],
+            reward="prototype de robot fonctionnel et un pourcentage de 10% de réussite"
+        )
+        self.player.quests.extend([
+            salles_visited_quest,
+            questionner_suspects_quest,
+            créer_un_robot
+        ])
+        self._setup_quests()
         
     def print_welcome(self):
         print(
