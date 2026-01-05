@@ -175,44 +175,13 @@ class Actions:
         return False
 
     def quests(game, list_of_words, number_of_parameters):
-    """
-        Show all quests and their status.
-        
-        Args:
-            game (Game): The game object.
-            list_of_words (list): The list of words in the command.
-            number_of_parameters (int): The number of parameters expected by the command.
-
-        Returns:
-            bool: True if the command was executed successfully, False otherwise.
-
-        Examples:
-
-        >>> from game import Game
-        >>> game = Game()
-        >>> game.setup("TestPlayer")
-        >>> Actions.quests(game, ["quests"], 0)
-        <BLANKLINE>
-        📋 Liste des quêtes:
-          ❓ Grand Explorateur (Non activée)
-          ❓ Grand Voyageur (Non activée)
-          ❓ Découvreur de Secrets (Non activée)
-        <BLANKLINE>
-        True
-        >>> Actions.quests(game, ["quests", "param"], 0)
-        <BLANKLINE>
-        La commande 'quests' ne prend pas de paramètre.
-        <BLANKLINE>
-        False
-
-        """
         # If the number of parameters is incorrect, print an error message and return False.
         n = len(list_of_words)
         if n != number_of_parameters + 1:
             command_word = list_of_words[0]
             print(MSG0.format(command_word=command_word))
-
             return False
+
         # Show all quests
         game.player.quest_manager.show_quests()
         return True

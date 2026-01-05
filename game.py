@@ -16,8 +16,10 @@ class Game:
         self.commands = {}
         self.player = None
         self.current_room = None
+        
 
     def setup(self):
+
 
         # ---------- COMMANDES ----------
         self.commands["help"] = Command("help", ": afficher cette aide", Actions.help, 0)
@@ -30,7 +32,16 @@ class Game:
         self.commands["talk"] = Command("talk", "<nom> : parler à une personne", Actions.talk, 1)
         self.commands["alibi"] = Command("alibi", "<nom> : demander l’alibi", Actions.alibi, 1)
         self.commands["accuse"] = Command("accuse", "<nom> : accuser le suspect", Actions.accuse, 1)
-
+        #self.commands["inventory"] = Command("inventory", ": afficher l’inventaire", Actions.inventory, 0)
+        # ---------- QUÊTES ----------
+        self.commands["quests"]= Command("quests", ": afficher les quêtes en cours", Actions.quests, 0)
+        self.commands["quest"]= Command("quest", "<numéro> : afficher les détails d’une quête", Actions.quest, 1)
+        self.commands["activate"]= Command("activate", ": afficher les objectifs activés", Actions.activate, 1)
+        self.commands["rewards"]= Command("rewards", ": afficher les récompenses obtenues", Actions.rewards, 0)
+        # ---------- OBJETS ----------
+        #self.commands["inventory"] = Command("inventory", ": afficher l’inventaire", Actions.inventory, 0)
+        #self.commands["use"] = Command("use", "<nom> : utiliser un objet", Actions.use, 1)
+        #self.commands["take"] = Command("take", "<nom> : prendre un objet", Actions.take, 1)
         # ---------- SALLES ----------
         BU = Room("Bibliothèque", "dans le hall principal de la BU.")
         histoire = Room("Salle Histoire", "dans la salle d’histoire.")
@@ -180,6 +191,7 @@ class Game:
 
         self.quests.append(salles_visited_quest)
         self.quests.append(questionner_suspects_quest)
+        self.player.quest_manager.add_quest(salles_visited_quest)
 
         
     def print_welcome(self):
