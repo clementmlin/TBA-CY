@@ -146,42 +146,41 @@ class Game:
         self.player.current_room = BU
         self.current_room = BU
     def _setup_quests(self):
+        # Quête 1 : Visiter toutes les salles liées à l'humain
         salles_visited_quest = Quest(
             title="Explorer les salles liées à l'humain",
             description="Visitez toutes les salles liées à l'étude de l'humain.",
             target_rooms=[
-                room for room in self.rooms if room.name in [
-                    "Salle Histoire", "Histoire contemporaine",
-                    "Politique", "Société", "Philosophie",
+                room for room in self.rooms
+                if room.name in [
+                    "Salle Histoire",
+                    "Histoire contemporaine",
+                    "Politique",
+                    "Société",
+                    "Philosophie",
                     "Psychologie"
-                ]
-            ]
+                    ]
+            ],
             reward="Badge d'explorateur humain"
         )
+
+        # Quête 2 : Questionner les suspects dans la bibliothèque
         questionner_suspects_quest = Quest(
             title="Questionner les suspects",
             description="Parlez à tous les suspects présents dans la bibliothèque.",
             target_characters=[
-                char for room in self.rooms for char in room.characters
+                char
+                for room in self.rooms
+                if room.name == "Bibliothèque"
+                for char in room.characters
+                if char.is_suspect
             ],
             reward="Badge d'enquêteur"
         )
-        créer_un_robot = Quest(
-            title="Créer un robot",
-            description="Utilisez les éléments pour créer un robot.",
-            target_items=[
-                Item("Circuit imprimé", "Un circuit imprimé essentiel pour un robot.", 0.2),
-                Item("Capteurs", "Des capteurs pour permettre au robot de percevoir son environnement.", 0.1),
-                Item("Moteurs", "Des moteurs pour permettre au robot de se déplacer.", 0.5)
-            ],
-            reward="prototype de robot fonctionnel et un pourcentage de 10% de réussite"
-        )
-        self.player.quests.extend([
-            salles_visited_quest,
-            questionner_suspects_quest,
-            créer_un_robot
-        ])
-        self._setup_quests()
+
+        self.quests.append(salles_visited_quest)
+        self.quests.append(questionner_suspects_quest)
+
         
     def print_welcome(self):
         print(
