@@ -145,7 +145,28 @@ class Game:
         self.player = Player(input("\nEntrez votre nom : "))
         self.player.current_room = BU
         self.current_room = BU
-
+    def _setup_quests(self):
+        salles_visited_quest = Quest(
+            title="Explorer les salles liées à l'humain",
+            description="Visitez toutes les salles liées à l'étude de l'humain.",
+            target_rooms=[
+                room for room in self.rooms if room.name in [
+                    "Salle Histoire", "Histoire contemporaine",
+                    "Politique", "Société", "Philosophie",
+                    "Psychologie"
+                ]
+            ]
+            reward="Badge d'explorateur humain"
+        )
+        questionner_suspects_quest = Quest(
+            title="Questionner les suspects",
+            description="Parlez à tous les suspects présents dans la bibliothèque.",
+            target_characters=[
+                char for room in self.rooms for char in room.characters
+            ],
+            reward="Badge d'enquêteur"
+        )
+        
     def print_welcome(self):
         print(
             "Cette nuit-là, au cœur d’un hiver glacial de 1999, "
