@@ -6,8 +6,6 @@ from character import Character
 from item import Item
 from quest import Quest
 
-
-
 class Game:
 
     def __init__(self):
@@ -16,6 +14,7 @@ class Game:
         self.commands = {}
         self.player = None
         self.current_room = None
+        self.quests = Quest()
 
     def setup(self):
 
@@ -88,7 +87,6 @@ class Game:
             "Un ordinateur allumé sur lequel tu peux tenter de lire la clé USB.",
             3
         )
-
         psycho.add_item(arme_crime)
         histoire.add_item(livre_enigme)
         techno.add_item(cle_usb)
@@ -145,7 +143,35 @@ class Game:
         self.player = Player(input("\nEntrez votre nom : "))
         self.player.current_room = BU
         self.current_room = BU
-
+    """def setup_quests(self):
+        #definir les quêtes ainsi que leurs objectifs et récompenses
+        self.quests.add_quest(
+            "Découvrir l'arme du crime",
+            "Trouver l'arme utilisée dans le meurtre.",
+            [("Trouver l'arme du crime", "Arme du crime")],
+            "Détective Novice Badge"
+        )
+        self.quests.add_quest(
+            "Découvrir les salles liées à l'humanité",
+            "Trouver l'arme utilisée dans le meurtre.",
+            [("Trouver l'arme du crime", "Arme du crime")],
+            "Détective Novice Badge"
+        )
+        self.quests.add_quest(
+            "Découvrir l'arme du crime",
+            "Trouver l'arme utilisée dans le meurtre.",
+            [("Trouver l'arme du crime", "Arme du crime")],
+            "Détective Novice Badge"
+        )
+        self.quests.add_quest(
+            "Découvrir l'arme du crime",
+            "Trouver l'arme utilisée dans le meurtre.",
+            [("Trouver l'arme du crime", "Arme du crime")],
+            "Détective Novice Badge"
+        )"""
+        
+        
+       
     def print_welcome(self):
         print(
             "Cette nuit-là, au cœur d’un hiver glacial de 1999, "
@@ -177,8 +203,6 @@ class Game:
 
         command = self.commands[cmd]
         command.action(self, words, command.number_of_parameters)
-
-
 def main():
     game = Game()
     game.play()
