@@ -28,7 +28,8 @@ class Player:
         self.quest_manager.check_room_objectives(self.current_room.name)
         # Vérification des objectifs liés aux déplacements
         self.move_count += 1
-        self.quest_manager.check_move_objectives(self.move_count)
+        self.quest_manager.check_counter_objectives(self.move_count, current_count=self.move_count)
+        
 
         return True
     def add_reward(self, reward):
