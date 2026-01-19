@@ -132,10 +132,21 @@ class Actions:
         for char in game.current_room.characters:
             if char.name.lower() == name:
                 print(char.talk())
+
+                # 🔓 Activer automatiquement la quête
+                game.player.quest_manager.activate_quest("Questionner les suspects")
+
+                # ✅ Valider l’objectif "parler avec X"
+                game.player.quest_manager.check_action_objectives(
+                    "parler",
+                    char.name
+                )
+
                 return True
 
         print("Cette personne n'est pas ici.")
         return False
+
 
     def alibi(game, list_of_words, number_of_parameters):
         if len(list_of_words) != number_of_parameters + 1:

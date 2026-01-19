@@ -1,17 +1,23 @@
-
 from quest import QuestManager
+
 class Player:
     def __init__(self, name):
         self.name = name
         self.current_room = None
 
         # Historique des salles VISITÉES (pile)
-        # On n’y met PAS la salle de départ
         self.history = []
+
+        # Compteur de déplacements
         self.move_count = 0
+
+        # Gestionnaire de quêtes
         self.quest_manager = QuestManager(self)
+
+        # Récompenses
         self.rewards = []
 
+        # Inventaire
         self.inventory = []
 
     def move(self, next_room):
@@ -24,28 +30,19 @@ class Player:
             self.history.append(self.current_room)
 
         self.current_room = next_room
-        # Vérification des objectifs liés aux salles
+
+        # Objectifs liés aux salles
         self.quest_manager.check_room_objectives(self.current_room.name)
-        # Vérification des objectifs liés aux déplacements
+
+        # Objectifs liés aux déplacements
         self.move_count += 1
-        self.quest_manager.check_counter_objectives(self.move_count, current_count=self.move_count)
-        
+        self.quest_manager.check_counter_objectives(
+            "Marcher",               # ✅ NOM du compteur
+            current_count=self.move_count
+        )
 
         return True
-    def add_reward(self, reward):
-        if reward and rewards not in self.rewards:
-            self.rewards.append(reward)
-            print(f"\nVous avez reçu une récompense : {reward}\n")
-    
-    def show_rewards(self):
-        if not self.rewards:
-            print("\nVous n'avez reçu aucune récompense pour le moment.\n")
-        
-        else:
-            print("\nRécompenses obtenues :")
-            for reward in self.rewards:
-                print(f" - {reward}")
-            print()  
+
     def back(self):
         """
         Revenir à la salle précédente
@@ -56,6 +53,20 @@ class Player:
 
         self.current_room = self.history.pop()
         return True
+
+    def add_reward(self, reward):
+        if reward and reward not in self.rewards:
+            self.rewards.append(reward)
+            print(f"\n🎁 Vous avez reçu une récompense : {reward}\n")
+
+    def show_rewards(self):
+        if not self.rewards:
+            print("\nVous n'avez reçu aucune récompense pour le moment.\n")
+        else:
+            print("\n🏆 Récompenses obtenues :")
+            for reward in self.rewards:
+                print(f" - {reward}")
+            print()
 
     def get_history(self):
         """
@@ -68,5 +79,6 @@ class Player:
         for room in self.history:
             text += f"    - {room.description}\n"
         return text
+
     def total_weight(self):
-        return sum(item.weight for item in self.inventory.values())
+        return sum(item.weight for item in self.inventory)
