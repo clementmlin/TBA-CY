@@ -44,6 +44,7 @@ class Quest:
         self.is_completed = False
         self.is_active = False
         self.reward = reward
+        
 
 
     def activate(self):
