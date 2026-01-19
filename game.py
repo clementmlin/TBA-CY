@@ -156,6 +156,7 @@ class Game:
         self.player = Player(input("\nEntrez votre nom : "))
         self.player.current_room = BU
         self.current_room = BU
+        self._setup_quests()
     def _setup_quests(self):
         # Quête 1 : Visiter toutes les salles liées à l'humain
         salles_visited_quest = Quest(
