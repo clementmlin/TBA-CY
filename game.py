@@ -16,6 +16,7 @@ class Game:
         self.commands = {}
         self.player = None
         self.current_room = None
+        self.quests = []
 
 
     def setup(self):
@@ -156,42 +157,49 @@ class Game:
         self.player = Player(input("\nEntrez votre nom : "))
         self.player.current_room = BU
         self.current_room = BU
+    
+    
+    
     def _setup_quests(self):
-        # Quête 1 : Visiter toutes les salles liées à l'humain
+
         salles_visited_quest = Quest(
             title="Explorer les salles liées à l'humain",
             description="Visitez toutes les salles liées à l'étude de l'humain.",
-            target_rooms=[
-                room for room in self.rooms
-                if room.name in [
-                    "Salle Histoire",
-                    "Histoire contemporaine",
-                    "Politique",
-                    "Société",
-                    "Philosophie",
-                    "Psychologie"
-                    ]
+            objectives=[
+                "Visiter Salle Histoire",
+                "Visiter Histoire contemporaine",
+                "Visiter Politique",
+                "Visiter Société",
+                "Visiter Philosophie",
+                "Visiter Psychologie"
             ],
             reward="Badge d'explorateur humain"
         )
 
-        # Quête 2 : Questionner les suspects dans la bibliothèque
         questionner_suspects_quest = Quest(
             title="Questionner les suspects",
             description="Parlez à tous les suspects présents dans la bibliothèque.",
-            target_characters=[
-                char
-                for room in self.rooms
-                if room.name == "Bibliothèque"
-                for char in room.characters
-                if char.is_suspect
+            objectives = [
+                "parler avec bibliothécaire",
+                "parler avec étudiant",
+                "parler avec professeur",
+                "parler avec chercheuse",
+                "parler avec agent"
             ],
             reward="Badge d'enquêteur"
         )
 
+    # Ajouter au jeu
+        self.quests.append(salles_visited_quest)
+        self.quests.append(questionner_suspects_quest)
+
+    # Ajouter au QuestManager
         self.player.quest_manager.add_quest(salles_visited_quest)
         self.player.quest_manager.add_quest(questionner_suspects_quest)
-        self.player.quest_manager.add_quest(salles_visited_quest)
+
+    # Activer au moins une quête
+        self.player.quest_manager.activate_quest("Explorer les salles liées à l'humain")
+
     def win(self, murderer_name):
         print("\n🎉 ENQUÊTE RÉSOLUE 🎉")
         print(f"Bravo {self.player.name} !")
@@ -218,6 +226,7 @@ class Game:
 
     def play(self):
         self.setup()
+        self._setup_quests()
         self.print_welcome()
 
         while not self.finished:
