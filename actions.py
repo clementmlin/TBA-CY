@@ -174,16 +174,25 @@ class Actions:
         if name in CHARACTER_MAPPING:
             name = CHARACTER_MAPPING[name]
 
+        # chercher le personnage dans la salle
         for char in game.current_room.characters:
             if char.name.lower() == name:
-                print(char.accuse())
+                print(char.accuse())  # message du personnage
+
+                # Vérification du meurtrier
                 if char.guilty:
                     print("\n🎉 Vous avez résolu le meurtre !")
                     game.finished = True
-                return True
+                    return True
+                else:
+                    print("\n💀 Mauvaise accusation…")
+                    game.finished = True
+                    return True
 
-        print("Cette personne n'est pas ici.")
+        print("Cette personne n'est pas le meurtrier.")
         return False
+
+    
 
     def quests(game, list_of_words, number_of_parameters):
         # If the number of parameters is incorrect, print an error message and return False.
