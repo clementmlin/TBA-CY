@@ -1,28 +1,158 @@
 # TBA
 
-Ce repo contient la première version (minimale) du jeu d’aventure TBA.
 
-Les lieux sont au nombre de 6. Il n'y a pas encore d’objets ni de personnages autres que le joueur et très peu d’interactions. Cette première version sert de base à ce qui va suivre, et sera améliorée au fur et à mesure.
+##  Organisation du projet et description des modules
+
+Le projet est structuré en plusieurs modules Python, chacun ayant une responsabilité bien définie afin de garantir une architecture claire, modulaire et maintenable.
+
+###  Modules principaux
+
+- `game.py` / `Game` :  
+  Gère la boucle principale du jeu, l’initialisation de l’environnement, la gestion des entrées utilisateur ainsi que la coordination entre les différents modules.
+
+- `room.py` / `Room` :  
+  Définit les propriétés génériques d’un lieu, notamment son nom, sa description, les sorties disponibles, les objets présents et les personnages rencontrés.
+
+- `player.py` / `Player` :  
+  Représente le joueur, sa position dans le monde, son historique de déplacements, son inventaire et ses interactions avec l’environnement.
+
+- `command.py` / `Command` :  
+  Représente les commandes saisies par le joueur, leur analyse syntaxique ainsi que leur interprétation.
+
+- `actions.py` / `Action` :  
+  Centralise l’ensemble des actions réalisables dans le jeu (déplacements, observation, dialogues, accusations, gestion des quêtes, etc.) et assure le lien entre les commandes et la logique métier.
+
+---
+
+###  Modules secondaires
+
+- `character.py` / `Character` :  
+  Gère les personnages non-joueurs, leurs dialogues, leurs alibis, leur comportement et leur implication dans l’enquête.
+
+- `item.py` / `Item` :  
+  Définit les objets interactifs du jeu, leurs propriétés et leur rôle dans la résolution des quêtes et de l’enquête.
+
+- `quest.py` / `Quest` :  
+  Représente une quête, ses objectifs, sa progression et sa récompense.
+
+- `quest_manager.py` / `QuestManager` :  
+  Assure la gestion centralisée des quêtes, notamment leur activation, leur suivi et la validation des objectifs.
 
 
-## Structuration
-
-Il y a pour le moment 5 modules contenant chacun une classe.
-
-- `game.py` / `Game` : description de l'environnement, interface avec le joueur ;
-- `room.py` / `Room` : propriétés génériques d'un lieu  ;
-- `player.py` / `Player` : le joueur ;
-- `command.py` / `Command` : les consignes données par le joueur ;
-- `actions.py` / `Action` : les interactions entre .
+---
 
 
+#  Guide Utilisateur
 
+---
 
+##  Présentation générale
 
-# 🕵️ TBA – Text Based Adventure : Enquête à la Bibliothèque
+Ce projet est un jeu d’aventure textuel (Text-Based Adventure – TBA) développé en Python.  
+Le joueur incarne un détective chargé de résoudre une enquête criminelle au sein d’une bibliothèque universitaire.
 
-Un **jeu d'aventure textuel (Text-Based Adventure)** développé en **Python**, proposant une **enquête immersive** dans une bibliothèque mystérieuse.  
-Le joueur doit explorer les salles, interroger les suspects, collecter des indices et résoudre un meurtre.
+L’objectif est d’explorer les différentes salles, d’interagir avec les personnages, de collecter des indices, d’accomplir des quêtes et, à terme, de démasquer le véritable coupable.
+
+---
+
+##  Univers du jeu
+
+L’action se déroule dans une bibliothèque universitaire mystérieuse, composée de plusieurs salles thématiques.  
+Un meurtre y a été commis, et plusieurs suspects sont présents sur les lieux.
+
+Le joueur devra :
+- explorer les différents espaces,
+- analyser les dialogues,
+- confronter les alibis,
+- et relier les indices afin de résoudre l’enquête.
+
+---
+
+##  Conditions de victoire et de défaite
+
+### Conditions de victoire
+
+- Identifier correctement le coupable.
+- L’accuser via la commande appropriée.
+
+### Conditions de défaite
+
+- Accuser un innocent.
+- Quitter le jeu sans avoir résolu l’enquête.
+
+---
+
+##  Carte et exploration
+
+Le jeu propose une exploration libre de plusieurs salles interconnectées.
+
+### Exemples de salles :
+
+- Bibliothèque principale  
+- Salle d’Histoire  
+- Salle de Philosophie  
+- Salle de Psychologie  
+- Salle de Technologie  
+- Salle de Mathématiques  
+
+Chaque salle peut contenir :
+- des personnages,
+- des objets,
+- des sorties vers d’autres salles.
+
+---
+
+##  Personnages
+
+Le joueur peut interagir avec différents personnages, chacun possédant :
+- un dialogue spécifique,
+- un alibi,
+- un rôle potentiel dans l’enquête.
+
+Un seul de ces personnages est le véritable coupable.
+
+---
+
+##  Objets et indices
+
+Des objets sont disséminés dans le jeu et servent d’indices clés pour progresser dans l’enquête.
+
+Exemples :
+- arme du crime,
+- documents suspects,
+- supports numériques,
+- objets personnels.
+
+---
+
+##  Système de quêtes
+
+Le jeu intègre un système de quêtes dynamiques permettant de guider le joueur.
+
+Chaque quête comporte :
+- des objectifs précis,
+- une progression mesurable,
+- une récompense.
+
+Les quêtes permettent de :
+- structurer l’exploration,
+- encourager les interactions,
+- faciliter la progression narrative.
+
+---
+
+##  Installation
+
+### Prérequis
+
+- Python 3.9 ou supérieur
+- Tkinter (inclus par défaut avec Python)
+
+### Vérification de l’installation de Tkinter
+
+```bash
+python -m tkinter
+
 
 
 ---
