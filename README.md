@@ -148,11 +148,6 @@ Les quêtes permettent de :
 - Python 3.9 ou supérieur
 - Tkinter (inclus par défaut avec Python)
 
-### Vérification de l’installation de Tkinter
-
-```bash
-python -m tkinter
-
 
 
 ---
