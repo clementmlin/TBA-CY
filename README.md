@@ -159,3 +159,128 @@ Terminal interactif 🖥️
 Boutons de déplacement 🎮
 
 Boutons d’aide et quitter
+
+
+
+
+
+```mermaid
+
+classDiagram
+
+Game --> Player
+Game --> Room
+Game --> Command
+Game --> Actions
+
+Player --> QuestManager
+Player --> Item
+Player --> Room
+
+QuestManager --> Quest
+
+Room --> Item
+Room --> Character
+
+Command --> Actions
+
+class Game {
+  +rooms
+  +player
+  +current_room
+  +commands
+  +play()
+  +process_command()
+}
+
+class Player {
+  +name
+  +current_room
+  +history
+  +inventory
+  +move()
+  +back()
+}
+
+class Room {
+  +name
+  +description
+  +exits
+  +items
+  +characters
+}
+
+class Character {
+  +name
+  +dialog
+  +alibi
+  +guilty
+  +talk()
+  +accuse()
+}
+
+class Item {
+  +name
+  +description
+  +weight
+}
+
+class Quest {
+  +title
+  +objectives
+  +reward
+  +activate()
+  +complete_objective()
+}
+
+class QuestManager {
+  +quests
+  +active_quests
+  +activate_quest()
+  +check_objectives()
+}
+
+class Command {
+  +command_word
+  +help_string
+  +action
+}
+```
+
+
+
+
+
+
+##  Perspectives de développement
+
+Plusieurs axes d’amélioration ont été identifiés afin d’enrichir l’expérience de jeu et d’améliorer la qualité globale du projet :
+
+###  Interface graphique
+L’interface graphique a été partiellement développée. Cependant, en raison de nombreux problèmes techniques impactant le code de base, nous avons décidé de suspendre temporairement son développement afin de garantir la stabilité du jeu.
+
+Dans une perspective future, nous souhaitons :
+- résoudre ces problèmes structurels,
+- optimiser l’architecture du projet,
+- et proposer aux utilisateurs une véritable interface graphique complète, fluide et ergonomique, améliorant significativement l’immersion.
+
+---
+
+###  Carte du jeu et level design
+Nous souhaitons proposer une carte plus élaborée et immersive, intégrant une verticalité (étages, sous-sols, escaliers, ascenseurs, etc.).  
+Cette évolution permettrait :
+- d’enrichir l’exploration,
+- de complexifier les déplacements,
+- et d’augmenter la profondeur du gameplay, améliorant ainsi le plaisir de jeu.
+
+---
+
+###  Quêtes secondaires et progression
+Concernant les quêtes secondaires, nous aurions souhaité créer un véritable lien de dépendance entre elles, en mettant en place un système de récompenses influençant directement leur faisabilité.
+
+Par exemple :
+- certaines quêtes ne pourraient être accessibles qu’après l’obtention d’objets ou de compétences spécifiques,
+- les récompenses pourraient débloquer de nouvelles zones, interactions ou dialogues.
+
+Cela permettrait de renforcer la cohérence scénaristique, la progression du joueur et la dimension stratégique du jeu.
+
