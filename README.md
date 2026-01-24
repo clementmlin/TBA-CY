@@ -165,7 +165,6 @@ Boutons d’aide et quitter
 
 
 ```mermaid
-
 classDiagram
 
 Game --> Player
@@ -246,6 +245,7 @@ class Command {
   +action
 }
 ```
+
 
 
 
