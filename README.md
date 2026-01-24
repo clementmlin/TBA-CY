@@ -111,6 +111,13 @@ Le joueur peut interagir avec différents personnages, chacun possédant :
 
 Un seul de ces personnages est le véritable coupable.
 
+
+---
+
+##  Carte
+![Carte de la bibliothèque](<WhatsApp Image 2026-01-24 at 19.20.37-1.jpeg>)
+
+
 ---
 
 ##  Objets et indices
